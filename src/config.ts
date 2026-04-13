@@ -33,6 +33,52 @@ Do NOT use for DNS resolution -- use network_lookup_dns instead. Do NOT use for 
         },
         required: ["host"],
       },
+      outputSchema: {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "description": "Host scanned"
+            },
+            "scannedPorts": {
+              "type": "number",
+              "description": "Total ports scanned"
+            },
+            "openPorts": {
+              "type": "number",
+              "description": "Number of open ports"
+            },
+            "results": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "port": {
+                    "type": "number"
+                  },
+                  "open": {
+                    "type": "boolean"
+                  },
+                  "service": {
+                    "type": "string"
+                  },
+                  "responseMs": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "timestamp": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "host",
+            "scannedPorts",
+            "openPorts",
+            "results"
+          ]
+        },
     },
   ],
 };
