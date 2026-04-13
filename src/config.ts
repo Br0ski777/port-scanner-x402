@@ -3,7 +3,7 @@ import type { ApiConfig } from "./shared";
 export const API_CONFIG: ApiConfig = {
   name: "port-scanner",
   slug: "port-scanner",
-  description: "Check if common ports are open on a host using fetch with timeout.",
+  description: "Scan TCP ports on any host -- check open/closed status, response time. 16 common ports by default.",
   version: "1.0.0",
   routes: [
     {
@@ -12,7 +12,15 @@ export const API_CONFIG: ApiConfig = {
       price: "$0.003",
       description: "Scan common ports on a host to check which are open",
       toolName: "network_scan_ports",
-      toolDescription: "Use this when you need to check if common ports are open on a host. Scans TCP ports using fetch with timeout. Returns a list of open/closed ports with response times. Do NOT use for DNS resolution — use domain_lookup_intelligence instead. Do NOT use for SSL certificate checks — use security_check_ssl instead.",
+      toolDescription: `Use this when you need to check which TCP ports are open on a host. Returns port status and response times in JSON.
+
+Returns: 1. host scanned 2. ports array with port number, status (open/closed/filtered), responseTime in ms 3. openCount and totalScanned 4. scanDuration in ms.
+
+Example output: {"host":"example.com","ports":[{"port":80,"status":"open","responseTime":45},{"port":443,"status":"open","responseTime":52},{"port":22,"status":"closed","responseTime":null}],"openCount":2,"totalScanned":16,"scanDuration":1200}
+
+Use this FOR server reconnaissance, verifying firewall rules, checking service availability, and infrastructure auditing.
+
+Do NOT use for DNS resolution -- use network_lookup_dns instead. Do NOT use for SSL certificate checks -- use security_check_ssl instead. Do NOT use for HTTP header analysis -- use network_analyze_headers instead.`,
       inputSchema: {
         type: "object",
         properties: {
