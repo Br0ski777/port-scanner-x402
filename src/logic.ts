@@ -1,5 +1,20 @@
 import type { Hono } from "hono";
 
+
+// ATXP: requirePayment only fires inside an ATXP context (set by atxpHono middleware).
+// For raw x402 requests, the existing @x402/hono middleware handles the gate.
+// If neither protocol is active (ATXP_CONNECTION unset), tryRequirePayment is a no-op.
+async function tryRequirePayment(price: number): Promise<void> {
+  if (!process.env.ATXP_CONNECTION) return;
+  try {
+    const { requirePayment } = await import("@atxp/server");
+    const BigNumber = (await import("bignumber.js")).default;
+    await requirePayment({ price: BigNumber(price) });
+  } catch (e: any) {
+    if (e?.code === -30402) throw e;
+  }
+}
+
 const DEFAULT_PORTS = [21, 22, 25, 53, 80, 110, 143, 443, 993, 995, 3306, 3389, 5432, 6379, 8080, 8443];
 const TIMEOUT_MS = 3000;
 
@@ -35,6 +50,7 @@ async function checkPort(host: string, port: number): Promise<{ port: number; op
 
 export function registerRoutes(app: Hono) {
   app.post("/api/scan", async (c) => {
+    await tryRequirePayment(0.003);
     const body = await c.req.json().catch(() => null);
     if (!body?.host) {
       return c.json({ error: "Missing required field: host" }, 400);
