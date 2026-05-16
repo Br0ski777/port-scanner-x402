@@ -12,7 +12,7 @@
   "remotes": [
     {
       "type": "sse",
-      "url": "https://port-scanner-x402-production.up.railway.app/mcp"
+      "url": "https://port-scanner.api.klymax402.com/mcp"
     }
   ]
 }
