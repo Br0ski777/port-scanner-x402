@@ -37,7 +37,7 @@ Any x402-aware client ([`@x402/fetch`](https://www.npmjs.com/package/@x402/fetch
 
 | Tool | Method | Path | Price | Description |
 |---|---|---|---|---|
-| `network_scan_ports` | POST | `/api/scan` | $0.003 | Scan common ports on a host to check which are open |
+| `network_scan_ports` | POST | `/api/scan` | $0.008 | Scan common ports on a host to check which are open |
 
 ### `network_scan_ports`
 
