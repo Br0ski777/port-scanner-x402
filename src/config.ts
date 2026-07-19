@@ -9,7 +9,7 @@ export const API_CONFIG: ApiConfig = {
     {
       method: "POST",
       path: "/api/scan",
-      price: "$0.003",
+      price: "$0.008",
       description: "Scan common ports on a host to check which are open",
       toolName: "network_scan_ports",
       toolDescription: `Use this when you need to check which TCP ports are open on a host. Returns port status and response times in JSON.
